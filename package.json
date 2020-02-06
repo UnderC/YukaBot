@@ -9,7 +9,11 @@
   "author": "UnderC",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "discord.js": "^11.5.1",
+    "opusscript": "0.0.7",
+    "ytdl-core": "^1.0.7",
+    "ytpl": "^0.1.19",
+    "ytsr": "^0.1.10"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
