@@ -5,15 +5,22 @@ class MusicServers {
     this.servers = new Map()
   }
 
-  get (sID) {
-    const server = this.servers.get(sID)
-    if (!server) return this.set(sID)
+  get (gID) {
+    const server = this.servers.get(gID)
+    if (!server) return this.set(gID)
     return server
   }
 
-  set (sID) {
-    this.servers.set(sID, new MusicServer())
-    return this.get(sID)
+  set (gID, server) {
+    const here = server || new MusicServer()
+    this.servers.set(gID, here)
+    return here
+  }
+
+  del (gID) {
+    this.get(gID).removeAllListeners()
+    this.servers.delete(gID)
+    this.handlers.delete(gID)
   }
 }
 

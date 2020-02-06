@@ -13,10 +13,12 @@ class MusicServer extends events.EventEmitter {
     this.dispatcher = null // 비어있을면 재생 불가
     this.volume = 50 // 0 이면 소리가 나지 않음
     this.repeat = false
+    this.handled = false
     this._ = new MusicPlayer(this)
   }
 
   async join (voiceChannel) {
+    if (this.player) this.emit('alreadyJoin')
     this.player = await voiceChannel.join()
     this.emit('join')
   }
@@ -33,6 +35,7 @@ class MusicServer extends events.EventEmitter {
   stop (cbLeave) {
     // call by Leave(Method)
     if (!this.dispatcher) return
+    this.skipSafe = true
     this.dispatcher.end()
     if (!cbLeave) this.emit('stop')
   }
@@ -49,6 +52,11 @@ class MusicServer extends events.EventEmitter {
     if (!this.dispatcher) return
     this.dispatcher.paused ? this.dispatcher.resume() : this.dispatcher.pause()
     this.emit('state', this.dispatcher.paused)
+  }
+
+  skip () {
+    this.dispatcher.end()
+    this.emit('skip')
   }
 
   clear () {

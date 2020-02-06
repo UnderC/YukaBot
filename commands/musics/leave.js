@@ -1,5 +1,5 @@
 module.exports.run = (client, msg) => {
-  const here = client.m.get(msg.channel.id)
+  const here = client.m.get(msg.guild.id)
   here.leave()
 }
 
