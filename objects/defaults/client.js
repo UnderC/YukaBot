@@ -1,10 +1,13 @@
 const Discord = require('discord.js')
+const musics = require('../musics')
 class Client extends Discord.Client {
   constructor (config) {
     super()
     this.config = config
+    this.plugins = []
     this.commands = new Map()
-    // if (config.token) this.login(config.token)
+    this.categories = new Map()
+    this.m = new musics.MusicServers()
   }
 
   login (token) {
