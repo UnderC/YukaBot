@@ -18,12 +18,8 @@ class MusicQueue {
     return this
   }
 
-  get first () {
+  shift () {
     return this.queue.shift()
-  }
-
-  get thatLast () {
-    return this.queue.length === 0
   }
 }
 
