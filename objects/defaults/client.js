@@ -4,7 +4,11 @@ class Client extends Discord.Client {
     super()
     this.config = config
     this.commands = new Map()
-    if (config.token) this.login(config.token)
+    // if (config.token) this.login(config.token)
+  }
+
+  login (token) {
+    super.login(token || this.config.token)
   }
 }
 

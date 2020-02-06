@@ -1,12 +1,5 @@
-let storage = null
-
-module.exports = (A, b, c) => {
+module.exports = (A, ...args) => {
   if (typeof A === 'function') {
-    return new A(b, storage || c)
+    return new A(...args)
   }
-}
-
-module.exports.storage = (s) => {
-  storage = s
-  return this
 }
