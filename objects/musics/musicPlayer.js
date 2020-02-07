@@ -7,6 +7,7 @@ class MusicPlayer {
 
   start () {
     if (!this.server.player) return
+    if (this.server.isPlaying) return
     if (this.server.dispatcher) {
       this.server.dispatcher.removeAllListeners()
       delete this.server.dispatcher
@@ -26,7 +27,8 @@ class MusicPlayer {
     this.server.emit('now', np)
   }
 
-  end () {
+  end (reason) {
+    console.log(reason)
     this.server.isPlaying = false
     if (this.server.repeat) this.server.add(this.server.nowPlaying)
     if (this.server.queue.length === 0) return this.server.leave()

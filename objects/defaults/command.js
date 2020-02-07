@@ -4,7 +4,7 @@ class YukaCommand {
     this.category = c
     this.info = e.info
     this.chk = (m) => (!this.info.reqOwn ? m.hasPermission(this.info.perms) : false) || this.client.config.owners.includes(m.id)
-    this.run = (msg) => typeof e.run === 'function' ? (this.chk(msg.member) ? e.run(this.client, msg) : false) : () => { console.error('not assigned') }
+    this.run = (msg) => typeof e.run === 'function' ? ((this.info.perms ? this.chk(msg.member) : true) ? e.run(this.client, msg) : false) : () => { console.error('not assigned') }
     if (this.client.commands) {
       let category = this.client.categories.get(this.category)
       if (!category) {

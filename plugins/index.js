@@ -1,1 +1,1 @@
-module.exports.categoryCheck = require('./categoryCheck')
+module.exports.musicHandler = require('./musicHandler')

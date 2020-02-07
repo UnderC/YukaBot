@@ -18,18 +18,28 @@ class MusicServer extends events.EventEmitter {
   }
 
   async join (voiceChannel) {
-    if (this.player) this.emit('alreadyJoin')
+    if (this.player) return // this.move(voiceChannel)
     this.player = await voiceChannel.join()
     this.emit('join')
   }
 
-  leave () {
-    if (!this.player) return
+  leave (cbMove) {
+    // call by Move(Method)
+    if (!this.player) return this.emit('notInVoiceChannel')
     this.player.disconnect()
 
     this.stop(true)
     this.clear()
-    this.emit('leave')
+    if (!cbMove) this.emit('leave')
+  }
+
+  move (voiceChannel) {
+    const here = this.player.voiceConnection.channel.calculatedPosition
+    if (here === voiceChannel.calculatedPosition) return this.emit('alreadyJoin')
+
+    this.leave(true)
+    this.join(voiceChannel)
+    this.emit('move')
   }
 
   stop (cbLeave) {
@@ -55,6 +65,7 @@ class MusicServer extends events.EventEmitter {
   }
 
   skip () {
+    if (!this.dispatcher) return
     this.dispatcher.end()
     this.emit('skip')
   }

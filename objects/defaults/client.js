@@ -8,6 +8,7 @@ class Client extends Discord.Client {
     this.commands = new Map()
     this.categories = new Map()
     this.m = new musics.MusicServers()
+    this.Embed = Discord.RichEmbed
   }
 
   login (token) {
