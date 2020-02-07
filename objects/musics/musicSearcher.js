@@ -11,17 +11,6 @@ class MusicSearcher {
   }
 
   /*
-  async search (query, counts) {
-    console.log(query)
-    const filters = await ytsr.getFilters(query)
-    const filter = filters.get('Type').find(o => o.name === 'Video').ref
-    await ytsr.getFilters(filter.ref)
-    const result = await ytsr(null, { limit: counts, nextpageRef: filter.ref })
-    return result
-  }
-  */
-
-  /*
   playlist () {
 
   }

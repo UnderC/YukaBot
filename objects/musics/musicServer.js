@@ -11,7 +11,7 @@ class MusicServer extends events.EventEmitter {
     this.queue = new MusicQueue() // 모듈 참고
     this.nowPlaying = null
     this.dispatcher = null // 비어있을면 재생 불가
-    this.volume = 50 // 0 이면 소리가 나지 않음
+    this.volume = 0.5 // 0 이면 소리가 나지 않음
     this.repeat = false
     this.handled = false
     this._ = new MusicPlayer(this)
@@ -43,8 +43,8 @@ class MusicServer extends events.EventEmitter {
   setVolume (vol) {
     if (!vol) return
     const before = this.volume
-    this.volume = vol % 1 === 0 ? vol : vol *= 100
-    if (this.dispatcher) this.dispatcher.setVolume(vol)
+    this.volume = vol % 1 === 0 ? vol / 100 : vol
+    if (this.dispatcher) this.dispatcher.setVolume(this.volume)
     this.emit('vol', before, this.volume)
   }
 
