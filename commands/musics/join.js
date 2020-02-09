@@ -3,7 +3,9 @@ module.exports.run = (client, msg) => {
   if (!voiceChannel) return
 
   const here = client.m.get(msg.guild.id)
+  if (here.player) return
   here.join(voiceChannel)
+  msg.channel.send('음성 채널에 접속하였습니다.')
 }
 
 module.exports.info = {

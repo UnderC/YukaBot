@@ -3,7 +3,8 @@ module.exports.run = (client, msg) => {
   const volume = Number(msg.args[1])
 
   if (Number.isNaN(volume)) return
-  here.setVolume(volume)
+  const results = here.setVolume(volume).map(v => v * 100)
+  msg.channel.send(`볼륨이 ${results[0]}% 에서 ${results[1]}% 로 변경되었습니다.`)
 }
 
 module.exports.info = {
