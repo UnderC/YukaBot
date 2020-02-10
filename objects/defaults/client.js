@@ -7,7 +7,16 @@ class Client extends Discord.Client {
     this.plugins = []
     this.commands = new Map()
     this.categories = new Map()
-    this.m = new musics.MusicServers()
+
+    if (config.music.useNative) {
+      this.m = new musics.Native.MusicServers()
+      this.searcher = new musics.Lavalink.MusicSearcher()
+    } else {
+      const { host, port, password } = config.music.nodes[0]
+      this.m = new musics.Lavalink.MusicServers(this, config.music.nodes, { user: config.music.botID })
+      this.searcher = new musics.Lavalink.MusicSearcher(host, port, password)
+    }
+
     this.Embed = Discord.RichEmbed
   }
 

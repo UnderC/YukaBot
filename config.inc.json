@@ -1,5 +1,16 @@
 {
   "token": "",
   "prefix": "!",
-  "owners": [""]
+  "owners": [""],
+  "music": {
+    "useNative": true,
+    "botID" : "",
+    "nodes": [
+      {
+        "host": "127.0.0.1",
+        "port": "2333",
+        "password": "password"
+      }
+    ]
+  }
 }
