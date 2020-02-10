@@ -13,7 +13,7 @@ module.exports.run = (client, msg) => {
     .setThumbnail(np.thumbnail)
     .setDescription(`
       **제목** : [${np.title}](${np.link})
-      **길이** : ${Math.floor(np.strDuration)}
+      **길이** : ${np.strDuration}
       **남은 시간** : ${time}
       **업로더** : [${np.author.name}](${np.author.link})
     `)
