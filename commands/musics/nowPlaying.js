@@ -4,7 +4,7 @@ module.exports.run = (client, msg) => {
 
   let startAt = new Date()
   if (here.dispatcher && here.dispatcher.streamingData) startAt = new Date(here.dispatcher.streamingData.startTime)
-  else if (here.player && here.player.state) startAt = new Date(here.player.state.time)
+  else if (here.player && here.player.state) startAt = new Date() - here.player.state.position
   const seconds = Math.floor((new Date() - startAt) / 1000)
   const time = seconds >= np.secDuration ? '0:0' : np.secToArray(Math.floor(np.secDuration) - seconds).join(':')
 
