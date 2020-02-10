@@ -2,10 +2,11 @@ module.exports.run = (client, msg) => {
   const here = client.m.get(msg.guild.id)
   const np = here.nowPlaying
 
-  if (!here.dispatcher || !here.dispatcher.streamingData || !here.dispatcher.streamingData.startTime) return
-  const startAt = new Date(here.dispatcher.streamingData.startTime)
+  let startAt = new Date()
+  if (here.dispatcher && here.dispatcher.streamingData) startAt = new Date(here.dispatcher.streamingData.startTime)
+  else if (here.player && here.player.state) startAt = new Date(here.player.state.time)
   const seconds = Math.floor((new Date() - startAt) / 1000)
-  const time = seconds >= np.secDuration ? '0:0' : np.secToArray(np.secDuration - seconds).join(':')
+  const time = seconds >= np.secDuration ? '0:0' : np.secToArray(Math.floor(np.secDuration) - seconds).join(':')
 
   const embed = new client.Embed()
   embed.setTitle(':cd: 지금 재생중!')
