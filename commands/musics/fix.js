@@ -1,6 +1,6 @@
 module.exports.run = (client, msg) => {
   const here = client.m.get(msg.guild.id)
-  here.stop(true)
+  here.stop()
   here.queue.fix(here.nowPlaying)
   here._.start()
 }

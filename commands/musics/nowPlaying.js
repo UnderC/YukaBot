@@ -1,12 +1,19 @@
+const progressBar = (pos, len, count = 20) => {
+  const result = new Array(count).fill('=')
+  result[Math.floor((pos / len) * count)] = '■'
+  return result
+}
+
 module.exports.run = (client, msg) => {
   const here = client.m.get(msg.guild.id)
-  const np = here.nowPlaying
+  if (client.config.music.useNative ? !here.dispatcher : !here.player) return msg.channel.send('아무런 곡이 재생되고 있지 않습니다!')
 
-  let startAt = new Date()
-  if (here.dispatcher && here.dispatcher.streamingData) startAt = new Date(here.dispatcher.streamingData.startTime)
-  else if (here.player && here.player.state) startAt = new Date() - here.player.state.position
-  const seconds = Math.floor((new Date() - startAt) / 1000)
-  const time = seconds >= np.secDuration ? '0:0' : np.secToArray(Math.floor(np.secDuration) - seconds).join(':')
+  const np = here.nowPlaying
+  const progress = progressBar(
+    client.config.music.useNative
+      ? (here.dispatcher.streamingData.startTime + np.secDuration * 1000)
+      : here.player.state.position, np.secDuration * 1000
+  )
 
   const embed = new client.Embed()
   embed.setTitle(':cd: 지금 재생중!')
@@ -14,8 +21,8 @@ module.exports.run = (client, msg) => {
     .setDescription(`
       **제목** : [${np.title}](${np.link})
       **길이** : ${np.strDuration}
-      **남은 시간** : ${time}
       **업로더** : [${np.author.name}](${np.author.link})
+      **진행상황** : ${progress.join('')}
     `)
   msg.channel.send(embed)
 }
